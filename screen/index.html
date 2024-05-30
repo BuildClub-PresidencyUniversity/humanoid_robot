@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #logo {
+            text-align: center;
+            margin-bottom: 20px;
+            top: 10px;
+            position: fixed;
+        }
+        #gif-container {
+            text-align: center;
+        }
+        #listening-gif, #saying-gif, #error-gif {
+            display: none;
+            width: auto;
+            height: 80vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="logo">
+        <img src="./logo.webp" width="30%" height="auto">
+    </div>
+    <div id="gif-container">
+        <img id="listening-gif" src="./listening.gif" alt="Listening">
+        <img id="saying-gif" src="./saying.gif" alt="Saying">
+        <img id="error-gif" src="./error.gif" alt="ERROR">
+    </div>
+    
+    <script>
+        function updateGif(response) {
+            const listeningGif = document.getElementById('listening-gif');
+            const sayingGif = document.getElementById('saying-gif');
+            const errorGif = document.getElementById('error-gif');
+            
+            if (response === 'Listening') {
+                listeningGif.style.display = 'block';
+                sayingGif.style.display = 'none';
+                errorGif.style.display = 'none';
+            } else if (response === 'Saying') {
+                listeningGif.style.display = 'none';
+                sayingGif.style.display = 'block';
+                errorGif.style.display = 'none';
+            } else{
+                listeningGif.style.display = 'none';
+                sayingGif.style.display = 'none';
+                errorGif.style.display = 'block';
+            }
+        }
+
+        const socket = new WebSocket('ws://192.168.137.1:8765');
+
+        socket.onmessage = function(event) {
+            const data = event.data;
+            updateGif(data);
+        };
+
+        socket.onopen = function() {
+            console.log('WebSocket connection established');
+        };
+
+        socket.onclose = function() {
+            console.log('WebSocket connection closed');
+        };
+
+        socket.onerror = function(error) {
+            console.error('WebSocket error:', error);
+        };
+    </script>
+</body>
+</html>
