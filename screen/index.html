@@ -1,7 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
     <style>
+        *{
+            font-family: "Poetsen One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            margin: 0;
+            padding: 0;
+        }
         body {
             background-color: rgb(255, 255, 255);
             display: flex;
@@ -18,24 +28,62 @@
             position: fixed;
         }
         #gif-container {
-            text-align: center;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         #listening-gif, #saying-gif, #error-gif {
+            position: fixed;
+            bottom: 0;
             display: none;
             width: auto;
-            height: 80vh;
+            height: 70%;
+            object-fit: contain;
+            z-index: -1;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .naac {
+            text-align: center;
+            font-size: 50px;
+            animation: fadeInOut 2s infinite;
+            color: rgb(255, 99, 99);
+            background-color: rgba(255, 0, 0, 0.208);
+            border-radius: 15px;
+            padding: 10px;
+            position: fixed;
+            left: 30%;
+            bottom: 0;
+        }
+        #bc{
+            position: fixed;
+            border-radius: 50%;
+            right: 10;
+            bottom: 10;
+            height: 100px;
+            width: 100px;
         }
     </style>
 </head>
 <body>
     <div id="logo">
-        <img src="./logo.webp" width="30%" height="auto">
+        <img src="./logo.webp" width="70%" height="auto">
+        <img src="./buildclub.png" id="bc">
+        <h1 style="font-size: 50px;">PRISM</h1>
+        <h1>(Presidency's Robotic Innovations for Science and Mechanics)</h1>
     </div>
     <div id="gif-container">
         <img id="listening-gif" src="./listening.gif" alt="Listening">
         <img id="saying-gif" src="./saying.gif" alt="Saying">
         <img id="error-gif" src="./error.gif" alt="ERROR">
     </div>
+    <h1 class="naac" style="text-align: center; font-size: 40px;">Welcomes NAAC Team</h1>
     
     <script>
         function updateGif(response) {

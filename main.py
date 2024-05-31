@@ -90,14 +90,14 @@ def speak(text):
 def listen_for_hotword():
     with sr.Microphone() as source:
         recognizer.adjust_for_ambient_noise(source)
-        print("Listening for hotword 'Candy'...")
+        print("Listening for hotword 'prism'...")
         update_expression_ai("Listening")
         audio = recognizer.listen(source)
         try:
             # Recognize speech using Google Web Speech API
             text = recognizer.recognize_google(audio).lower()
             print(f"Recognized: {text}")
-            if "candy" in text:
+            if "prism" in text:
                 return True
         except sr.UnknownValueError:
             print("Could not understand audio")
