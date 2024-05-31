@@ -11,6 +11,11 @@ import pyttsx3
 import presidencyRelatedAi as pai
 from offline_ai import TextToResponseChatbot
 
+from moving.esp32_websocket_client import RobotUDPClient
+import asyncio
+
+#esp32_ip = "192.168.137.111" # it may change
+
 def update_expression_ai(new_expression):
     try:
         with open('expression.txt', 'w') as file:
@@ -18,6 +23,14 @@ def update_expression_ai(new_expression):
         print("Expression updated successfully.")
     except Exception as e:
         print(f"An error occurred: {e}")
+
+def sendData(data):
+    response = robot_client.send_data(data)
+
+    if response:
+        print("Response from ESP32:", response)
+    else:
+        print("Failed to receive response from ESP32. Exiting...")
 
 # Initialize recognizer
 recognizer = sr.Recognizer()
@@ -130,7 +143,8 @@ def ai_conversation(chatbot):
         try:
             user_input = recognizer.recognize_google(audio)
             print(f"You said: {user_input}")
-            update_expression_ai("Saying")
+            #update_expression_ai("Saying")
+            #await sendData("t") #talking
             # Try to get response from Gemini chatbot
             gemini_response = ask_question(user_input)
             if gemini_response is not None:
@@ -138,15 +152,21 @@ def ai_conversation(chatbot):
                     #print(f"Gemini: {gemini_response}")
                     offline_response = chatbot2.get_response_from_text(user_input)
                     print(f"Offline Robot: {offline_response}")
+                    update_expression_ai("Saying")
+                    sendData("t") #talking
                     speak(offline_response)
                     pass
                 else:
                     print(f"Gemini: {gemini_response}")
+                    update_expression_ai("Saying")
+                    sendData("t") #talking
                     speak(gemini_response)
             else:
                 # If Gemini fails, fallback to offline robot
                 offline_response = chatbot2.get_response_from_text(user_input)
                 print(f"Offline Robot: {offline_response}")
+                update_expression_ai("Saying")
+                sendData("t") #talking
                 speak(offline_response)
         except sr.UnknownValueError:
             print("Sorry, I did not understand that.")
@@ -161,10 +181,14 @@ def main():
     while True:
         if listen_for_hotword():
             ai_conversation(chatbot)
+            sendData("s")  # stop
             print("Returning to hotword listening mode...")
             time.sleep(2)  # Pause briefly before listening again
 
 if __name__ == "__main__":
+    esp32_ip = input("Enter the IP address of your ESP32: ")
+    print(f"IP Address of Robot Locomotion Controller : {esp32_ip}")
+    robot_client = RobotUDPClient(esp32_ip)
     update_expression_ai("starting")
     chatbot = Chatbot()
     chatbot2 = TextToResponseChatbot()

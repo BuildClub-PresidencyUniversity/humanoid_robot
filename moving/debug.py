@@ -1,36 +1,42 @@
-import asyncio
-import websockets
+import socket
 
-async def send_message(uri):
-    async with websockets.connect(uri) as websocket:
-        while True:
-            # Prompt the user for input
-            message = input("Enter a message to send to the ESP32 (or type 'exit' to quit): ")
+def send_message(esp32_ip, esp32_port):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.settimeout(2.0)  # Set timeout for blocking operations
 
-            if message.lower() == 'exit':
-                print("Exiting...")
-                break
+    while True:
+        # Prompt the user for input
+        message = input("Enter a message to send to the ESP32 (or type 'exit' to quit): ")
 
-            # Check if the message is empty
-            if not message.strip():
-                print("Message cannot be empty. Please enter a valid message.")
-                continue
+        if message.lower() == 'exit':
+            print("Exiting...")
+            break
 
+        # Check if the message is empty
+        if not message.strip():
+            print("Message cannot be empty. Please enter a valid message.")
+            continue
+
+        try:
             # Send the message to the ESP32
             print(f"Sending: {message}")
-            await websocket.send(message)
+            sock.sendto(message.encode(), (esp32_ip, esp32_port))
 
             # Receive the response from the ESP32
-            response = await websocket.recv()
-            print(f"Received: {response}")
+            response, _ = sock.recvfrom(1024)
+            print(f"Received: {response.decode()}")
+        except socket.timeout:
+            print("Error: Request timed out.")
+        except Exception as e:
+            print(f"Error: Failed to send data to ESP32 server: {e}")
 
 def main():
     # Prompt the user for the ESP32 IP address
     esp32_ip = input("Enter the IP address of your ESP32: ")
-    websocket_uri = f"ws://{esp32_ip}/ws"
+    esp32_port = 12345  # Use the same port number as in your ESP32 code
 
     # Run the send_message function
-    asyncio.get_event_loop().run_until_complete(send_message(websocket_uri))
+    send_message(esp32_ip, esp32_port)
 
 if __name__ == "__main__":
     main()
