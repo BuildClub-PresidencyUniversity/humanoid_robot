@@ -138,6 +138,7 @@ def ask_question(question):
 def ai_conversation(chatbot):
     with sr.Microphone() as source:
         recognizer.adjust_for_ambient_noise(source)
+        update_expression_ai("Listening2")
         print("You can speak now...")
         audio = recognizer.listen(source)
         try:
@@ -153,12 +154,17 @@ def ai_conversation(chatbot):
                     offline_response = chatbot2.get_response_from_text(user_input)
                     print(f"Offline Robot: {offline_response}")
                     update_expression_ai("Saying")
+                    sendData("l")  # left
+                    #sendData("r")  # right
                     sendData("t") #talking
                     speak(offline_response)
                     pass
                 else:
                     print(f"Gemini: {gemini_response}")
                     update_expression_ai("Saying")
+                    sendData("l")  # left
+                    #sendData("r")  # right
+                    sendData("c")  # center
                     sendData("t") #talking
                     speak(gemini_response)
             else:
@@ -166,6 +172,9 @@ def ai_conversation(chatbot):
                 offline_response = chatbot2.get_response_from_text(user_input)
                 print(f"Offline Robot: {offline_response}")
                 update_expression_ai("Saying")
+                sendData("l")  # left
+                #sendData("r")  # right
+                sendData("c")  # center
                 sendData("t") #talking
                 speak(offline_response)
         except sr.UnknownValueError:
@@ -182,6 +191,7 @@ def main():
         if listen_for_hotword():
             ai_conversation(chatbot)
             sendData("s")  # stop
+            sendData("c")  # center
             print("Returning to hotword listening mode...")
             time.sleep(2)  # Pause briefly before listening again
 
@@ -190,6 +200,12 @@ if __name__ == "__main__":
     print(f"IP Address of Robot Locomotion Controller : {esp32_ip}")
     robot_client = RobotUDPClient(esp32_ip)
     update_expression_ai("starting")
+    sendData("s")  # stop
+    sendData("l")  # left
+    time.sleep(2)
+    sendData("r")  # right
+    time.sleep(2)
+    sendData("c")  # center
     chatbot = Chatbot()
     chatbot2 = TextToResponseChatbot()
     main()

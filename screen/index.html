@@ -34,6 +34,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: -1;
         }
         #listening-gif, #saying-gif, #error-gif {
             position: fixed;
@@ -80,6 +81,7 @@
     </div>
     <div id="gif-container">
         <img id="listening-gif" src="./listening.gif" alt="Listening">
+        <img id="listening2-gif" src="./listning2.gif" alt="Listening2">
         <img id="saying-gif" src="./saying.gif" alt="Saying">
         <img id="error-gif" src="./error.gif" alt="ERROR">
     </div>
@@ -88,19 +90,28 @@
     <script>
         function updateGif(response) {
             const listeningGif = document.getElementById('listening-gif');
+            const listeningGif2 = document.getElementById('listening2-gif');
             const sayingGif = document.getElementById('saying-gif');
             const errorGif = document.getElementById('error-gif');
             
             if (response === 'Listening') {
                 listeningGif.style.display = 'block';
+                listeningGif2.style.display = 'none';
                 sayingGif.style.display = 'none';
                 errorGif.style.display = 'none';
             } else if (response === 'Saying') {
                 listeningGif.style.display = 'none';
+                listeningGif2.style.display = 'none';
                 sayingGif.style.display = 'block';
+                errorGif.style.display = 'none';
+            } else if (response === 'Listening2') {
+                listeningGif.style.display = 'none';
+                listeningGif2.style.display = 'block';
+                sayingGif.style.display = 'none';
                 errorGif.style.display = 'none';
             } else{
                 listeningGif.style.display = 'none';
+                listeningGif2.style.display = 'none';
                 sayingGif.style.display = 'none';
                 errorGif.style.display = 'block';
             }

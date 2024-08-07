@@ -14,26 +14,28 @@ intro = ("Hello and welcome to Presidency University!"
             "Currently, I'm a work in progress, but very soon I'll be getting my hands and legs, aiming to look and act even more like a human. "
             "I'm excited to meet you all and be a part of your journey here. Enjoy your orientation, and feel free to reach out if you have any questions or just want to chat!")
 
-inovationLab = (
-            "Here's a clear and concise response for directing you to the Innovation Lab: "
-            "Certainly! Assuming you're currently in Conference Room Besh, here's how you can get to the Innovation Lab: "
-            "1. Exit the Conference Room and take a left. "
-            "2. From there, you can choose to go either downside or upside (whichever is more convenient). "
-            "3. Continue straight and then take a short left followed by a short right. "
-            "4. You will reach Q Block. On your left side, you'll see the lift. "
-            "5. Enter the lift and press the button for the 4th floor. "
-            "6. Once on the 4th floor, head towards South Block. "
-            "7. Go straight, and you will find the Innovation Lab on your right side. "
-            "If you need further assistance, feel free to ask!")
+inovationLab = ("Assuming you are currently inside the Auditorium, follow these steps to reach the Innovation Lab: "
+            "1. You can use either of the exits on both sides of the Auditorium. "
+            "2. Once outside, proceed straight towards the west. "
+            "3. Continue straight until you reach the Canopy Circle. "
+            "4. At the Canopy Circle, this is the junction leading towards the Engineering Block. "
+            "5. Keep heading straight until you see the Admission Office sign in bold letters on the building. "
+            "6. Continue a bit further straight until you reach the stationary shop, which is D Block. "
+            "7. From D Block, take a left and head towards the South. "
+            "8. You will pass E Block and F Block. Near F Block, you will see two pathways. "
+            "9. You can take either pathway and proceed to the staircases or use the lift in Cube Block. "
+            "10. If you take the lift, go to the 4th floor. "
+            "11. Once on the 4th floor, head towards S Block. "
+            "12. The Innovation Lab will be on your right side.  Welcome to our college, and I'm glad to assist you!")
 
-admitionOff = ("To reach the Admission Office from the Conference Room: "
-                "1. Exit the Conference Room and take a right. "
-                "2. Continue straight until you see a stationery shop; this is D Block. "
-                "3. A little further, on your left-hand side, you will see a lift. You can take the lift or use the stairs. "
-                "4. Go to the first floor. "
-                "5. Once on the first floor, take a right and then a left. "
-                "6. You will see a series of chairs for visitors' comfort—that's the Admission Office. "
-                "Feel free to go there to clarify any doubts you may have!")
+admitionOff = ("Assuming you are currently inside the Auditorium, here's how to get to the Admission Office: "
+            "1. Exit the Auditorium: You'll find exits on both sides of the Auditorium. Choose either exit. "
+            "2. Head West: Once outside, proceed straight in the west direction. "
+            "3. Pass the MBA Block/Fee Department: Continue straight until you reach the Canopy Circle. "
+            "4. Reach the Canopy Circle: This is the central junction for navigating around the college. "
+            "5. Find the Engineering Block: From the Canopy Circle, head towards the Engineering Block. Look for the sign that reads 'School of Engineering' in bold letters. "
+            "6. Locate the Admission Office: Continue moving straight. On the west side, you will see the 'Admission Office' sign, with 'Register Office' just above it. "
+            "Feel free to sort out any issues you might have there. Welcome to our college, and I'm glad to assist you!")
 
 def presiAnswer(said):
     said = said.lower()

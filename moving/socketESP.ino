@@ -10,6 +10,11 @@ const int ledPin = 2;
 #define tpin 5
 #define spin 18
 
+#define ncpin 34 // neck center
+#define nlpin 35 // neck left
+#define nrpin 32 // neck right
+#define NApin 33 // NA
+
 // Create a WiFiUDP object
 WiFiUDP udp;
 
@@ -27,6 +32,12 @@ void setup() {
 
   pinMode(tpin, OUTPUT);
   pinMode(spin, OUTPUT);
+
+  pinMode(ncpin, OUTPUT);
+  pinMode(nlpin, OUTPUT);
+  pinMode(nrpin, OUTPUT);
+  pinMode(NApin, OUTPUT);
+
   // Initialize the LED pin
   pinMode(ledPin, OUTPUT);
   digitalWrite(ledPin, LOW); // Turn off LED (HIGH is OFF for built-in LED on ESP32)
@@ -88,10 +99,43 @@ void DebugMonitoring(String message) {
     digitalWrite(tpin, LOW);
 
   }
+  else if (message == "c")
+  {
+    digitalWrite(ncpin, 1);
+    digitalWrite(nlpin, 0);
+    digitalWrite(nrpin, 0);
+    digitalWrite(NApin, 0);
+  }
+  else if (message == "r")
+  {
+    digitalWrite(ncpin, 0);
+    digitalWrite(nlpin, 1);
+    digitalWrite(nrpin, 0);
+    digitalWrite(NApin, 0);
+  }
+  else if (message == "l")
+  {
+    digitalWrite(ncpin, 0);
+    digitalWrite(nlpin, 0);
+    digitalWrite(nrpin, 1);
+    digitalWrite(NApin, 0);
+  }
+  else if (message == "q")
+  {
+    digitalWrite(ncpin, 0);
+    digitalWrite(nlpin, 0);
+    digitalWrite(nrpin, 0);
+    digitalWrite(NApin, 0);
+  }
   else 
   {
     digitalWrite(tpin, LOW);
     digitalWrite(spin, LOW);
+
+    digitalWrite(ncpin, 0);
+    digitalWrite(nlpin, 0);
+    digitalWrite(nrpin, 0);
+    digitalWrite(NApin, 0);
   }
 }
 
